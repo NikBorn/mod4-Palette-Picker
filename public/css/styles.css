@@ -50,6 +50,13 @@ aside h2 {
   font-family: 'Muli', sans-serif;
 }
 
+h4 {
+  color: white;
+  background-color: #23242b;
+  display: inline-block;
+  padding: 2px 4px;
+}
+
 .main-palette {
   display: flex;
   width: 304px;
@@ -66,26 +73,38 @@ aside h2 {
 }
 
 .color1 {
-  background-color: magenta;
+  background-color: #25b0e4;
 }
 
 .color2 {
-  background-color: lime;
+  background-color: #e5af20;
 }
 
 .color3 {
-  background-color: orange;
+  background-color: #3f4eed;
 }
 
 .color4 {
-  background-color: royalblue;
+  background-color: #e1362e;
 }
 
 .color5 {
-  background-color: skyblue;
+  background-color: #2441a1;
   position: absolute;
   left: 75px;
   top: 75px
+}
+
+.color-value-top {
+  margin-top: 6px;
+}
+
+.color-value-bottom {
+  margin-top: 122px;
+}
+
+.color-value-center {
+  margin-top: 64px;
 }
 
 .generate-palette-button {
