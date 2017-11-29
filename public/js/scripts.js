@@ -1,6 +1,10 @@
+const randomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
 
 const generateRandomColors = () => {
-  console.log('make colors!')
+  const newPalette = [randomColor(), randomColor(), randomColor(), randomColor(), randomColor()]
+  console.log(newPalette)
 }
 
 $('.save-palette-button').on('click', () => {
