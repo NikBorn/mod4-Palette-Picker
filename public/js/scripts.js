@@ -44,5 +44,5 @@ $('.generate-palette-button').on('click', () => {
   generateRandomColors();
 });
 
-
+generateRandomColors();
 
