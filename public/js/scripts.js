@@ -10,6 +10,7 @@ const generateRandomColors = () => {
     randomColor().toUpperCase(), 
     randomColor().toUpperCase()];
   updateColorText(newPalette);
+  updateBackgroundColor(newPalette);
 };
 
 const updateColorText = (newPalette) => {
@@ -18,6 +19,15 @@ const updateColorText = (newPalette) => {
   $('.color-text-3').text(newPalette[2]);
   $('.color-text-4').text(newPalette[3]);
   $('.color-text-5').text(newPalette[4]);
+};
+
+const updateBackgroundColor = (newPalette) => {
+  $('.color1').css('backgroundColor', newPalette[0])
+  $('.color2').css('backgroundColor', newPalette[1])
+  $('.color3').css('backgroundColor', newPalette[2])
+  $('.color4').css('backgroundColor', newPalette[3])
+  $('.color5').css('backgroundColor', newPalette[4])
+
 };
 
 $('.save-palette-button').on('click', () => {
