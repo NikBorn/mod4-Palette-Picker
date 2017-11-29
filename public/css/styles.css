@@ -1,0 +1,72 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  text-align: center;
+}
+
+header {
+  background-color: grey;
+}
+
+main {
+  background-color: blue;
+  display: inline-block;
+  width: 80%;
+  min-height: 100vh;
+}
+
+aside {
+  background-color: red;
+  float: right;
+  width: 20%;
+  min-height: 100vh;
+}
+
+h1 {
+  margin: 0;
+}
+
+.main-palette {
+  display: flex;
+  width: 304px;
+  border: 2px solid black;
+  flex-wrap: wrap;
+  margin: 40px auto 10px auto;
+  position: relative;
+}
+
+.colorbox {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+}
+
+.color1 {
+  background-color: magenta;
+}
+
+.color2 {
+  background-color: lime;
+}
+
+.color3 {
+  background-color: orange;
+}
+
+.color4 {
+  background-color: royalblue;
+}
+
+.color5 {
+  background-color: skyblue;
+  position: absolute;
+  left: 75px;
+  top: 75px
+}
+
+.create-palette-button {
+  display: block;
+  margin: 0 auto 20px auto;
+}
