@@ -7,25 +7,47 @@
 }
 
 header {
-  background-color: grey;
+  background-color: 151518;
+  color: white;
+  font-family: 'Muli', sans-serif;
 }
 
 main {
-  background-color: blue;
+  background-color: #23242b;
   display: inline-block;
-  width: 80%;
+  width: 75%;
   min-height: 100vh;
 }
 
 aside {
-  background-color: red;
+  background-color: #151518;
+  color: white;
   float: right;
-  width: 20%;
+  width: 25%;
   min-height: 100vh;
+  padding-top: 40px;
+}
+
+button {
+  color: white;
+  background-color: #3b3c44;
+  border: none;
+  padding: 8px 6px;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+}
+
+input {
+  padding: 6px 0;
 }
 
 h1 {
   margin: 0;
+}
+
+aside h2 {
+  margin-bottom: 20px;
+  font-family: 'Muli', sans-serif;
 }
 
 .main-palette {
