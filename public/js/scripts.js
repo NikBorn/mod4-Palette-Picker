@@ -1,33 +1,30 @@
+let projectsArray = [];
+let colorPalette = [];
+
+
 const randomColor = () => {
   return '#' + Math.floor(Math.random() * 16777215).toString(16);
 };
 
 const generateRandomColors = () => {
-  const newPalette = [
-    randomColor().toUpperCase(), 
-    randomColor().toUpperCase(), 
-    randomColor().toUpperCase(), 
-    randomColor().toUpperCase(), 
-    randomColor().toUpperCase()];
-  updateColorText(newPalette);
-  updateBackgroundColor(newPalette);
+  colorPalette = [];
+  let count = 0;
+  console.log('count', count)
+  while(count < 6) {
+    colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false })
+    count++
+  };
+  if (count = 6) {
+    count = 0;
+  };
+  updateColorDisplay(colorPalette);
 };
 
-const updateColorText = (newPalette) => {
-  $('.color-text-1').text(newPalette[0]);
-  $('.color-text-2').text(newPalette[1]);
-  $('.color-text-3').text(newPalette[2]);
-  $('.color-text-4').text(newPalette[3]);
-  $('.color-text-5').text(newPalette[4]);
-};
-
-const updateBackgroundColor = (newPalette) => {
-  $('.color1').css('backgroundColor', newPalette[0])
-  $('.color2').css('backgroundColor', newPalette[1])
-  $('.color3').css('backgroundColor', newPalette[2])
-  $('.color4').css('backgroundColor', newPalette[3])
-  $('.color5').css('backgroundColor', newPalette[4])
-
+const updateColorDisplay = newPalette => {
+  newPalette.forEach((color, index) => {
+    $(`.color-text-${index + 1}`).text(newPalette[index].color);
+    $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
+  })
 };
 
 $('.save-palette-button').on('click', () => {
@@ -44,5 +41,22 @@ $('.generate-palette-button').on('click', () => {
   generateRandomColors();
 });
 
-generateRandomColors();
+const fetchAllProjects = () => {
+  return fetch(`http://localhost:3000/api/v1/projects`)
+    .then(results => results.json())
+    .then(projects => {
+      projects.map(project=> {
+      fetch(`http://localhost:3000/api/v1/projects/${project.id}/palettes`)
+                        .then(resultz => resultz.json())
+                        .then(res => project.palettes = res)
+                        .then(completeProject => {
+                          projectsArray.push(project)
+                          console.log(projectsArray)})
+      // return Object.assign({}, project, palettes)
+    })
+  })
+}
 
+
+generateRandomColors();
+fetchAllProjects();

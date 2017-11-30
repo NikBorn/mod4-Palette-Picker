@@ -66,7 +66,7 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
         return response.status(404).json({ error: `No saved Palettes for project ${request.params.id}`})
       }
     })
-})
+});
 
 app.post('/api/v1/projects/:id/palettes', (request, response) => {
   let palette = request.body;
@@ -91,7 +91,6 @@ app.post('/api/v1/projects/:id/palettes', (request, response) => {
     })
 });
 
-
 app.get('/api/v1/projects/:id', (request, response) => {
   database('projects').where('id', request.params.id).select()
     .then(projects => {
@@ -101,13 +100,7 @@ app.get('/api/v1/projects/:id', (request, response) => {
         return response.status(404).json({ error: `could not find paper with ID of ${request.params.id}` })
       }
     })
-})
-
-
-
-
-
-
+});
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
