@@ -2,79 +2,107 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
+app.set('port', process.env.PORT || 3000);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static(__dirname + '/public'));
 
-app.set('port', process.env.PORT || 3000);
-app.locals.title = 'Palette Picker';
-app.locals.projects = [{
-    id: '1',
-    name: 'first palette',
-    color1: '',
-    color2: '',
-    color3: '',
-    color4: '',
-    color5: ''
-  },
-  {
-    id: '2',
-      name: 'second palette',
-      color1: '',
-      color2: '',
-      color3: '',
-      color4: '',
-      color5: ''
-  }
-];
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
 
 app.get('/', (request, response) => {
 });
 
 app.get('/api/v1/projects', (request, response) => {
-  const projects = app.locals.projects;
+  database('projects').select()
+    .then((projects) => {
+      return response.status(200).json(projects);
+    })
+    .catch((error) => {
+      return response.status(500).json({ error });
+    });
+});
 
-  response.json({
-    projects
-  });
+app.get('/api/v1/palettes', (request, response) => {
+  database('palettes').select()
+    .then((palettes) => {
+      return response.status(200).json(palettes);
+    })
+    .catch((error) => {
+      return response.status(500).json({ error })
+    });
+});
+
+app.post('/api/v1/projects', (request, response) => {
+  const project = request.body;
+
+  for (let requiredParameter of ['name']) {
+    if (!project[requiredParameter]) {
+      return response.status(422).json({
+        error: `You are missing the ${requiredParameter} property`
+      });
+    }
+  }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      return response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      return response.status(500).json({ error })
+    })
+});
+
+app.get('/api/v1/projects/:id/palettes', (request, response) => {
+  database('palettes').where('project_id', request.params.id).select()
+    .then(palettes => {
+      if (palettes.length) {
+        return response.status(200).json(palettes);
+      } else {
+        return response.status(404).json({ error: `No saved Palettes for project ${request.params.id}`})
+      }
+    })
+});
+
+app.post('/api/v1/projects/:id/palettes', (request, response) => {
+  let palette = request.body;
+  const projectId = request.params.id;
+
+  for (let requiredParameter of ['name', 'color1', 'color2', 'color3', 'color4', 'color5']) {
+    if (!palette[requiredParameter]) {
+      return response.status(422).json({
+        error: `You re missing the ${requiredParameter} property`
+      });
+    }
+  }
+
+  palette = Object.assign({}, palette, { project_id: projectId })
+
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      return response.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      return response.status(500).json({ error })
+    })
 });
 
 app.get('/api/v1/projects/:id', (request, response) => {
-  const {
-    id
-  } = request.params;
-  const project = app.locals.projects.find(project => project.id === id);
-  if (project) {
-    return response.status(200).json(project);
-  } else {
-    return response.sendStatus(404);
-  }
+  database('projects').where('id', request.params.id).select()
+    .then(projects => {
+      if (projects.length) {
+        return response.status(200).json(projects);
+      } else {
+        return response.status(404).json({ error: `could not find paper with ID of ${request.params.id}` })
+      }
+    })
 });
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
 
-app.post('/api/v1/projects', (request, response) => {
-  const {
-    project
-  } = request.body;
-  const id = Date.now();
-
-  if (!project) {
-    return response.status(422).send({
-      error: 'No project added!'
-    });
-  } else {
-    app.locals.projects.push({
-      id,
-      project
-    });
-    return response.status(201).json({
-      id,
-      project
-    });
-  }
-})
