@@ -57,6 +57,17 @@ app.post('/api/v1/projects', (request, response) => {
     })
 });
 
+app.get('/api/v1/projects/:id/palettes', (request, response) => {
+  database('palettes').where('project_id', request.params.id).select()
+    .then(palettes => {
+      if (palettes.length) {
+        return response.status(200).json(palettes);
+      } else {
+        return response.status(404).json({ error: `No saved Palettes for project ${request.params.id}`})
+      }
+    })
+})
+
 app.post('/api/v1/projects/:id/palettes', (request, response) => {
   let palette = request.body;
   const projectId = request.params.id;
@@ -78,9 +89,19 @@ app.post('/api/v1/projects/:id/palettes', (request, response) => {
     .catch(error => {
       return response.status(500).json({ error })
     })
-
 });
 
+
+app.get('/api/v1/projects/:id', (request, response) => {
+  database('projects').where('id', request.params.id).select()
+    .then(projects => {
+      if (projects.length) {
+        return response.status(200).json(projects);
+      } else {
+        return response.status(404).json({ error: `could not find paper with ID of ${request.params.id}` })
+      }
+    })
+})
 
 
 
