@@ -40,7 +40,7 @@ app.get('/api/v1/palettes', (request, response) => {
 app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
 
-  for (let requiredParameter of ['name', 'project_id', 'color1', 'color2', 'color3', 'color4', 'color5']) {
+  for (let requiredParameter of ['name']) {
     if (!project[requiredParameter]) {
       return response.status(422).json({
         error: `You are missing the ${requiredParameter} property`

@@ -63,9 +63,11 @@ const prependProjects = (projectsArray) => {
       </div>`
     )
     palettes = project.palettes 
-    const palettesHTML = palettes.map(palette => {
-       htmlPalettes(palette, project.id)
-    })
+    if (palettes.length) {
+      const palettesHTML = palettes.map(palette => {
+         htmlPalettes(palette, project.id)
+      })
+    }
       // ${palettesHTML}
   })
 }
@@ -84,6 +86,7 @@ const updateMiniColors = () => {
 
 const updateDropDown = (projectsArray) => {
   const projectsDropDown = $('.projects-dropdown');
+  $('.projects-dropdown').html('')
   projectsArray.forEach((project) => {
     projectsDropDown.append(
       `<option value="${project.id}">${project.name.toUpperCase()}</option>`
@@ -100,14 +103,10 @@ const addPaletteToDB = (newPalette) => {
   })
     .then(response => response.json())
     .then(parsedResponse => {
-      prependNewPalette(newPalette)
+      // prependNewPalette(newPalette)
       htmlPalettes(newPalette, newPalette.project_id)
       // console.log(parsedResponse)
     })
-}
-
-const prependNewPalette = (newPalette) => {
-
 }
 
 const deletePaletteFromDB = (id) => {
@@ -139,8 +138,21 @@ $('.save-palette-button').on('click', () => {
 });
 
 $('.save-project-button').on('click', () => {
-  const projectName = $('.project-name-input').val();
-  updateMiniColors();
+  const name = $('.project-name-input').val();
+
+  fetch('./api/v1/projects', {
+    method: 'POST',
+    body: JSON.stringify({
+      name
+    }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(res => console.log(res))
+
 });
 
 $('.generate-palette-button').on('click', () => {
