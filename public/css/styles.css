@@ -160,3 +160,16 @@ h6 {
 .project-container {
   margin-top: 10px;
 }
+
+.delete-palette-button {
+  height: 10px;
+  width: 10px;
+  background-image: url('./assets/x-mark-3-32.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.palette-name {
+  display: inline-block;
+}
