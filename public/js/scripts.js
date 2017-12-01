@@ -38,8 +38,9 @@ const htmlPalettes = (palette, projectId) => {
   console.log(projectId)
   const project = $(`.project-container${projectId}`)
   project.append(
-    `<div>
-      <h5>${palette.name}</h5>
+    `<div class='palette-card'>
+      <h5 class='palette-name'>${palette.name}</h5>
+      <div class='delete-palette-button' projectID='${projectId}' paletteID='${palette.id}'></div>
       <div class='mini-palette'>
         ${htmlMiniSquare(palette.color1, 1)}
         ${htmlMiniSquare(palette.color2, 2)}
@@ -108,6 +109,20 @@ const addPaletteToDB = (newPalette) => {
 const prependNewPalette = (newPalette) => {
 
 }
+
+const deletePaletteFromDB = (id) => {
+  fetch(`./api/v1/palettes/${id}`, {
+    method: 'DELETE'
+  })
+  .then(response => console.log(response))
+  .catch(res => console.log(res))
+}
+
+$('.projects-container').on('click', '.delete-palette-button', function () {
+  const paletteId = $(this).attr('paletteID')  
+  const paletteCard = $(this).parent().remove();
+  deletePaletteFromDB(paletteId);
+})
 
 $('.save-palette-button').on('click', () => {
   const newPalette = Object.assign({
