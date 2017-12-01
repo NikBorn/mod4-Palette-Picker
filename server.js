@@ -15,7 +15,7 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
 app.get('/', (request, response) => {
-});
+});//getting our root static from line 11 is actually tellig it what to return
 
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
@@ -97,12 +97,36 @@ app.get('/api/v1/projects/:id', (request, response) => {
       if (projects.length) {
         return response.status(200).json(projects);
       } else {
-        return response.status(404).json({ error: `could not find paper with ID of ${request.params.id}` })
+        return response.status(404).json({ error: `could not find project with ID of ${request.params.id}` })
       }
     })
 });
 
+app.get('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('id', request.params.id).select()
+    .then(palettes => {
+      if (palettes.length) {
+        return response.status(200).json(palettes);
+      } else {
+        return response.status(404).json({ error: `could not find palette with ID of ${request.params.id}`})
+      }
+    })
+})
+
+app.delete('/api/v1/projects/:id/palettes/:id', (request, response) => {
+
+});
+
+app.patch('/api/v1/projects/:id/palettes/:id', (request, response) => {
+
+});
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 });
+
 

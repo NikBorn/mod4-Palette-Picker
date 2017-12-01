@@ -9,7 +9,6 @@ const randomColor = () => {
 const generateRandomColors = () => {
   colorPalette = [];
   let count = 0;
-  console.log('count', count)
   while(count < 6) {
     colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false })
     count++
@@ -27,14 +26,55 @@ const updateColorDisplay = newPalette => {
   })
 };
 
+const prependProjects = (projectsArray) => {
+  const projectsContainer = $('.projects-container');
+  projectsContainer.html('');
+  projectsArray.forEach(project => {
+    palettes = project.palettes 
+    const palettesHTML = palettes.map(palette => {
+      console.log(palette)
+      return (
+
+       `<div class='mini-palette'>
+          <div class='colorbox-mini mini-1'>
+              <h6>${palette.color1}</h6>
+            </div>
+            <div class='colorbox-mini mini-2'>
+              <h6>${palette.color2}</h6>
+            </div>
+            <div class='colorbox-mini mini-3'>
+              <h6>${palette.color3}</h6>
+            </div>
+            <div class='colorbox-mini mini-4'>
+              <h6>${palette.color4}</h6>
+            </div>
+            <div class='colorbox-mini mini-5'>
+              <h6>${palette.color1}</h6>
+            </div>
+          </div>
+        `
+      )
+    })
+    console.log('palettesHTML: ', palettesHTML)
+    projectsContainer.prepend(
+      `<div class='project-container'>
+        <h5>${project.name}</h5>
+        
+          ${palettesHTML}
+       
+      </div>`
+    )
+  })
+}
+
 $('.save-palette-button').on('click', () => {
   const paletteName = $('.palette-name-input').val();
-  console.log(paletteName);
+  // console.log(paletteName);
 });
 
 $('.save-project-button').on('click', () => {
   const projectName = $('.project-name-input').val();
-  console.log(projectName);
+  // console.log(projectName);
 });
 
 $('.generate-palette-button').on('click', () => {
@@ -51,12 +91,11 @@ const fetchAllProjects = () => {
                         .then(res => project.palettes = res)
                         .then(completeProject => {
                           projectsArray.push(project)
-                          console.log(projectsArray)})
-      // return Object.assign({}, project, palettes)
+                          prependProjects(projectsArray)
+                        })
     })
   })
 }
-
 
 generateRandomColors();
 fetchAllProjects();

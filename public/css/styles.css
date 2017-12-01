@@ -24,8 +24,9 @@ aside {
   color: white;
   float: right;
   width: 25%;
-  min-height: 100vh;
+  height: 100vh;
   padding-top: 40px;
+  overflow: scroll;
 }
 
 button {
@@ -57,6 +58,13 @@ h4 {
   padding: 2px 4px;
 }
 
+h6 {
+  color: white;
+  background-color: #23242b;
+  display: inline-block;
+  padding: 1px 4px;
+}
+
 .main-palette {
   display: flex;
   width: 304px;
@@ -72,20 +80,57 @@ h4 {
   display: inline-block;
 }
 
+.mini-palette {
+  display: flex;
+  width: 154px;
+  border: 2px solid black;
+  flex-wrap: wrap;
+  position: relative;
+  margin: 4px auto 0 auto;
+}
+
+.colorbox-mini {
+  width: 75px;
+  height: 75px;
+  background-color: magenta;
+}
+
+.mini-1,
 .color1 {
   background-color: #25b0e4;
 }
 
+.mini-2,
 .color2 {
   background-color: #e5af20;
 }
 
+.mini-3,
 .color3 {
   background-color: #3f4eed;
 }
 
+.mini-4,
 .color4 {
   background-color: #e1362e;
+}
+
+.mini-5 {
+  background-color: #2441a1;
+  position: absolute;
+  left: 35px;
+  top: 40px;
+  padding-top: 28px;
+}
+
+.mini-1, 
+.mini-2 {
+  padding-top: 6px;
+}
+
+.mini-3,
+.mini-4 {
+  padding-top: 56px;
 }
 
 .color5 {
@@ -110,4 +155,8 @@ h4 {
 .generate-palette-button {
   display: block;
   margin: 0 auto 20px auto;
+}
+
+.project-container {
+  margin-top: 10px;
 }
