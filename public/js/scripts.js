@@ -26,45 +26,46 @@ const updateColorDisplay = newPalette => {
   })
 };
 
-const htmlPalettes = (palette, project) => {
+const htmlMiniSquare = (paletteColor, index) => {
   return (
-    `<div class='mini-palette'>
-          <div id='i${palette.color1}'  class='colorbox-mini mini-1'>
-              <h6>${palette.color1}</h6>
-            </div>
-            <div id='i${palette.color2}'  class='colorbox-mini mini-2'>
-              <h6>${palette.color2}</h6>
-            </div>
-            <div id='i${palette.color3}'  class='colorbox-mini mini-3'>
-              <h6>${palette.color3}</h6>
-            </div>
-            <div id='i${palette.color4}'  class='colorbox-mini mini-4'>
-              <h6>${palette.color4}</h6>
-            </div>
-            <div id='i${palette.color5}'  class='colorbox-mini mini-5'>
-              <h6>${palette.color5}</h6>
-            </div>
-          </div>`
+`    <div id='i${paletteColor}' class='colorbox-mini mini-${index}'>
+      <h6>${paletteColor}</h6>
+    </div>`
+  )
+}
+
+const htmlPalettes = (palette, projectId) => {
+  console.log(projectId)
+  const project = $(`.project-container${projectId}`)
+  project.append(
+    `<div>
+      <h5>${palette.name}</h5>
+      <div class='mini-palette'>
+        ${htmlMiniSquare(palette.color1, 1)}
+        ${htmlMiniSquare(palette.color2, 2)}
+        ${htmlMiniSquare(palette.color3, 3)}
+        ${htmlMiniSquare(palette.color4, 4)}
+        ${htmlMiniSquare(palette.color5, 5)}
+      </div>
+    </div>`
   )
 }
 
 const prependProjects = (projectsArray) => {
   const projectsContainer = $('.projects-container');
-  projectsContainer.html('');
-
+  projectsContainer.empty();
+  console.log(projectsContainer)
   projectsArray.forEach(project => {
-    palettes = project.palettes 
-    const palettesHTML = palettes.map(palette => {
-      return htmlPalettes(palette, project)
-    })
-    projectsContainer.prepend(
-      `<div class='project-container'>
-        <h5>${project.name}</h5>
-        
-          ${palettesHTML}
-       
+    projectsContainer.append(
+      `<div class='project-container${project.id}' >
+      <h4>${project.name.toUpperCase()}</h4>
       </div>`
     )
+    palettes = project.palettes 
+    const palettesHTML = palettes.map(palette => {
+       htmlPalettes(palette, project.id)
+    })
+      // ${palettesHTML}
   })
 }
 
@@ -80,8 +81,46 @@ const updateMiniColors = () => {
   })
 }
 
+const updateDropDown = (projectsArray) => {
+  const projectsDropDown = $('.projects-dropdown');
+  projectsArray.forEach((project) => {
+    projectsDropDown.append(
+      `<option value="${project.id}">${project.name.toUpperCase()}</option>`
+    )
+  })
+}
+
+const addPaletteToDB = (newPalette) => {
+  console.log(newPalette)
+  return fetch(`/api/v1/projects/${newPalette.project_id}/palettes`, {
+    method: 'post',
+    body: JSON.stringify(newPalette),
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(response => response.json())
+    .then(parsedResponse => {
+      prependNewPalette(newPalette)
+      htmlPalettes(newPalette, newPalette.project_id)
+      // console.log(parsedResponse)
+    })
+}
+
+const prependNewPalette = (newPalette) => {
+
+}
+
 $('.save-palette-button').on('click', () => {
-  const paletteName = $('.palette-name-input').val();
+  const newPalette = Object.assign({
+    name: $('.palette-name-input').val(),
+    color1: $('.color-text-1').text(),
+    color2: $('.color-text-2').text(),
+    color3: $('.color-text-3').text(),
+    color4: $('.color-text-4').text(),
+    color5: $('.color-text-5').text(),
+    project_id: $('.projects-dropdown').val()
+  })
+  addPaletteToDB(newPalette)
+
 });
 
 $('.save-project-button').on('click', () => {
@@ -104,6 +143,7 @@ const fetchAllProjects = () => {
                         .then(completeProject => {
                           projectsArray.push(project)
                           prependProjects(projectsArray)
+                          updateDropDown(projectsArray)
                         })    
     })
   })
