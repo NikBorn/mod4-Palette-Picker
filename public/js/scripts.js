@@ -160,11 +160,11 @@ $('.generate-palette-button').on('click', () => {
 });
 
 const fetchAllProjects = () => {
-  return fetch(`http://localhost:3000/api/v1/projects`)
+  return fetch(`/api/v1/projects`)
     .then(results => results.json())
     .then(projects => {
       projects.map(project=> {
-      fetch(`http://localhost:3000/api/v1/projects/${project.id}/palettes`)
+      fetch(`/api/v1/projects/${project.id}/palettes`)
                         .then(resultz => resultz.json())
                         .then(res => project.palettes = res)
                         .then(completeProject => {
