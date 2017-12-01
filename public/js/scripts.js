@@ -47,8 +47,10 @@ const htmlPalettes = (palette, projectId) => {
         ${htmlMiniSquare(palette.color5, 5)}
       </div>
     </div>`
-  );
-};
+
+  )
+  updateMiniColors(palette)
+}
 
 const prependProjects = (projectsArray) => {
   const projectsContainer = $('.projects-container');
@@ -70,17 +72,25 @@ const prependProjects = (projectsArray) => {
   });
 };
 
-const updateMiniColors = () => {
-  const boxes = $('.colorbox-mini');
-  const boxesArray = Array.from(boxes);
+
+const updateMiniColors = (palette) => {
+  const keys = Object.keys(palette).splice(2, 5)
+  keys.forEach(color => {
+    $(`.colorbox-mini, i${palette[color]}`).css('backgroundColor', `${palette[color]}`)
+   
+  })
+  // palette.forEach(color=> {
+    
+  // })
+  // const boxesArray = Array.from(boxes)
   // console.log('boxes: ', boxesArray)
-  boxesArray.forEach(box => {
-    // console.log(box.id.slice(1))
-    const IDIOT = box.id;
-    const boxxx = $(IDIOT);// .css('backgroundColor', box.id.slice(1))
-    // console.log(boxxx);
-  });
-};
+  // boxesArray.forEach(box => {
+  //   // console.log(box.id.slice(1))
+  //   const IDIOT = box.id
+  //   const boxxx = $(IDIOT)//.css('backgroundColor', box.id.slice(1))
+  //   console.log(boxxx)
+  // })
+}
 
 const updateDropDown = (projectsArray) => {
   const projectsDropDown = $('.projects-dropdown');
