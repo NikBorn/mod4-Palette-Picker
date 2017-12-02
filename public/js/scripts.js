@@ -22,7 +22,10 @@ const updateColorDisplay = function (newPalette) {
   newPalette.forEach((color, index) => {
     const lock = $(`.color${index + 1}`).children('div');
     if (color.isLocked) {
-      lock.toggleClass('locked')
+      console.log('locked!')
+      lock.addClass('locked')
+    } else {
+      lock.removeClass('locked')
     }
     $(`.color-text-${index + 1}`).text(newPalette[index].color);
     $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
@@ -120,14 +123,15 @@ const deletePaletteFromDB = (id) => {
 
 const toggleLock = function (index) {
   const colorToToggle = colorPalette[index]
-  console.log(colorToToggle)
+  // console.log(colorToToggle)
   // colorPalette[index].attr()
   if (colorToToggle.isLocked) {
     colorToToggle.isLocked = false;
   } else {
     colorToToggle.isLocked = true
   }
-  console.log(colorToToggle.isLocked)
+  // console.log(colorPalette)
+  updateColorDisplay(colorPalette);
 }
 
 $('.projects-container').on('click', '.delete-palette-button', function () {
@@ -173,8 +177,10 @@ $('.generate-palette-button').on('click', () => {
 
 $('.colorbox').on('click', function () {
   const colorText = $(this)[0]
+  console.log(colorText)
   const colorArrayIndex = $(colorText).attr('class').split(' ')[0].slice(5)
-  toggleLock(colorArrayIndex)
+  console.log(colorArrayIndex - 1)
+  toggleLock(colorArrayIndex - 1)
 });
 
 const fetchAllProjects = () => {
