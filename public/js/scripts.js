@@ -26,8 +26,9 @@ const updateColorDisplay = newPalette => {
 };
 
 const htmlMiniSquare = (paletteColor, index) => {
+    const color = paletteColor.substr(1);
   return (
-    `    <div id='i${paletteColor}' class='colorbox-mini mini-${index}'>
+    `<div id='${color}' class='colorbox-mini mini-${index}'>
       <h6>${paletteColor}</h6>
     </div>`
   );
@@ -52,10 +53,9 @@ const htmlPalettes = (palette, projectId) => {
   updateMiniColors(palette)
 }
 
-const prependProjects = (projectsArray) => {
+const prependProjects = function (projectsArray) {
   const projectsContainer = $('.projects-container');
   projectsContainer.empty();
-  // console.log(projectsContainer);
   projectsArray.forEach(project => {
     projectsContainer.append(
       `<div class='project-container${project.id}' >
@@ -64,35 +64,27 @@ const prependProjects = (projectsArray) => {
     );
     let palettes = project.palettes;
     if (palettes.length) {
+      console.log(palettes)
       palettes.map(palette => {
         htmlPalettes(palette, project.id);
       });
     }
-    // ${palettesHTML}
   });
 };
 
-
-const updateMiniColors = (palette) => {
-  const keys = Object.keys(palette).splice(2, 5)
-  keys.forEach(color => {
-    $(`.colorbox-mini, i${palette[color]}`).css('backgroundColor', `${palette[color]}`)
-   
+const updateMiniColors = function (palette) {
+  const paletteKeys = Object.keys(palette)
+  const keys = Object.keys(palette).sort().splice(0, 5)
+  console.log(paletteKeys)
+  console.log(keys)
+  keys.forEach(function (color) {
+    console.log(color)
+    let colorId = (palette[color].substr(1))
+    $(`#${colorId}`).css('backgroundColor', `${palette[color]}`)
   })
-  // palette.forEach(color=> {
-    
-  // })
-  // const boxesArray = Array.from(boxes)
-  // console.log('boxes: ', boxesArray)
-  // boxesArray.forEach(box => {
-  //   // console.log(box.id.slice(1))
-  //   const IDIOT = box.id
-  //   const boxxx = $(IDIOT)//.css('backgroundColor', box.id.slice(1))
-  //   console.log(boxxx)
-  // })
 }
 
-const updateDropDown = (projectsArray) => {
+const updateDropDown = function (projectsArray) {
   const projectsDropDown = $('.projects-dropdown');
   $('.projects-dropdown').html('');
   projectsArray.forEach((project) => {
@@ -122,6 +114,7 @@ const deletePaletteFromDB = (id) => {
     method: 'DELETE'
   })
     .then(response => console.log(response))
+    .then(() => fetchAllProjects())
     .catch(res => console.log(res));
 };
 
@@ -129,6 +122,7 @@ $('.projects-container').on('click', '.delete-palette-button', function () {
   const paletteId = $(this).attr('paletteID');
   // const paletteCard = $(this).parent().remove()
   deletePaletteFromDB(paletteId);
+  $(paletteId).remove();
 });
 
 $('.save-palette-button').on('click', () => {
@@ -177,7 +171,8 @@ const fetchAllProjects = () => {
             projectsArray.push(project);
             prependProjects(projectsArray);
             updateDropDown(projectsArray);
-          });
+          })
+          .catch(res => console.log(res))
       });
     });
 };
