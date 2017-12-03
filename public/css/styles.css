@@ -36,6 +36,18 @@ button {
   padding: 8px 6px;
   font-weight: bold;
   font-family: 'Quicksand', sans-serif;
+  border-radius: 0;
+}
+
+button:hover {
+  background-color: #89FC3E;
+  color: black;
+}
+
+select,
+option {
+  height: 30px;
+  border-radius: 0px;
 }
 
 input {
@@ -56,6 +68,8 @@ h4 {
   background-color: #23242b;
   display: inline-block;
   padding: 2px 4px;
+  margin: 0;
+  height: 20px;
 }
 
 h6 {
@@ -68,7 +82,7 @@ h6 {
 .main-palette {
   display: flex;
   width: 304px;
-  border: 2px solid black;
+  border: 2px solid #23242b;
   flex-wrap: wrap;
   margin: 40px auto 10px auto;
   position: relative;
@@ -77,7 +91,8 @@ h6 {
 .colorbox {
   width: 150px;
   height: 150px;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .mini-palette {
@@ -92,31 +107,9 @@ h6 {
 .colorbox-mini {
   width: 75px;
   height: 75px;
-  background-color: magenta;
-}
-
-/* .mini-1, */
-.color1 {
-  background-color: #25b0e4;
-}
-
-.mini-2,
-.color2 {
-  background-color: #e5af20;
-}
-
-.mini-3,
-.color3 {
-  background-color: #3f4eed;
-}
-
-.mini-4,
-.color4 {
-  background-color: #e1362e;
 }
 
 .mini-5 {
-  background-color: #2441a1;
   position: absolute;
   left: 35px;
   top: 40px;
@@ -134,22 +127,20 @@ h6 {
 }
 
 .color5 {
-  background-color: #2441a1;
   position: absolute;
   left: 75px;
-  top: 75px
+  top: 75px;
+  padding-top: 64px;
 }
 
-.color-value-top {
-  margin-top: 6px;
+.color1,
+.color2 {
+  padding-top: 6px;
 }
 
-.color-value-bottom {
-  margin-top: 122px;
-}
-
-.color-value-center {
-  margin-top: 64px;
+.color3,
+.color4 {
+  padding-top: 124px;
 }
 
 .generate-palette-button {
