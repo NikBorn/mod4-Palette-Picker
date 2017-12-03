@@ -122,11 +122,14 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
           error: `Could not find palettes with id of ${id}.`
         });
       }
+      database('palettes').where('id', id).del()
+        .then(() => {
+          return response.sendStatus(204);
+        })    
     })
     .catch(error => {
       return response.status(500).json({ error });
     });
-
 });
 
 app.patch('/api/v1/projects/:id/palettes/:id', (request, response) => {
