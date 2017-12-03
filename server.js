@@ -75,7 +75,7 @@ app.post('/api/v1/projects/:id/palettes', (request, response) => {
   for (let requiredParameter of ['name', 'color1', 'color2', 'color3', 'color4', 'color5']) {
     if (!palette[requiredParameter]) {
       return response.status(422).json({
-        error: `You re missing the ${requiredParameter} property`
+        error: `You are missing the ${requiredParameter} property`
       });
     }
   }
@@ -127,13 +127,6 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       return response.status(500).json({ error });
     });
 
-  database('palettes').where('id', id).del()
-    .then(() => {
-      return response.sendStatus(204);
-    })
-    .catch(error => {
-      return response.status(500).json({ error });
-    });
 });
 
 app.patch('/api/v1/projects/:id/palettes/:id', (request, response) => {
