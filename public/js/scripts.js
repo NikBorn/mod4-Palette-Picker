@@ -76,22 +76,35 @@ const htmlPalettes = (palette, projectId) => {
 }
 
 const prependProjects = function (projectsArray) {
+
   const projectsContainer = $('.projects-container');
+
   projectsContainer.empty();
+
   projectsArray.forEach(project => {
-    projectsContainer.append(
-      `<div class='project-container${project.id}' >
-      <h4>${project.name.toUpperCase()}</h4>
-      </div>`
-    );
+
+    addProject(project);
+
     let palettes = project.palettes;
+
     if (palettes.length) {
       palettes.map(palette => {
         htmlPalettes(palette, project.id);
       });
     }
-  });
+  })
+
 };
+
+const addProject = (project) => {
+  const projectsContainer = $('.projects-container');
+  projectsContainer.append(
+    `<div class='project-container${project.id}' >
+      <h4>${project.name.toUpperCase()}</h4>
+      </div>`
+  );
+
+}
 
 const updateMiniColors = function (palette) {
   const paletteKeys = Object.keys(palette)
@@ -124,12 +137,13 @@ const addPaletteToDB = (newPalette) => {
     });
 };
 
+
+
 const deletePaletteFromDB = (id) => {
   fetch(`./api/v1/palettes/${id}`, {
     method: 'DELETE'
   })
     .then(response => console.log(response))
-    .then(() => fetchAllProjects())
     .catch(res => console.log(res));
 };
 
@@ -148,8 +162,8 @@ const toggleLock = function (index) {
 $('.projects-container').on('click', '.delete-palette-button', function () {
   const paletteId = $(this).attr('paletteID');
   // const paletteCard = $(this).parent().remove()
+  $(this).parent().remove()
   deletePaletteFromDB(paletteId);
-  $(paletteId).remove();
 });
 
 $('.save-palette-button').on('click', () => {
@@ -167,7 +181,6 @@ $('.save-palette-button').on('click', () => {
 
 $('.save-project-button').on('click', () => {
   const name = $('.project-name-input').val();
-
   fetch('./api/v1/projects', {
     method: 'POST',
     body: JSON.stringify({
@@ -179,7 +192,11 @@ $('.save-project-button').on('click', () => {
     }
   })
     .then(response => response.json())
-    .then(res => console.log(res));
+    .then(res => {
+      const project = Object.assign({ name }, res)
+      console.log(res.id)
+      addProject(project)
+    })
 });
 
 $('.generate-palette-button').on('click', () => {
