@@ -1,8 +1,4 @@
 
-
-
-
-
 exports.seed = function (knex, Promise) {
   return knex('palettes').del() //delete all footnotes
     .then(() => knex('projects').del()) //delete all papers
