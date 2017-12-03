@@ -38,8 +38,6 @@ const toggleLockClass = function (color, lock) {
 
 const updateColorDisplay = function (newPalette) {
   newPalette.forEach((color, index) => {
-    console.log(index + 1)
-    console.log($(`.color${index + 1}`))
     $(`.color-text-${index + 1}`).text(newPalette[index].color);
     $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
   });
@@ -192,7 +190,6 @@ $('.save-project-button').on('click', () => {
     .then(response => response.json())
     .then(res => {
       const project = Object.assign({ name }, res)
-      console.log(res.id)
       addProject(project)
     })
 });
@@ -202,7 +199,7 @@ $('.generate-palette-button').on('click', () => {
 });
 
 $('.colorbox').on('click', function () {
-  console.log('toggle-lock')
+  ('toggle-lock')
   const colorText = $(this)[0]
   const colorArrayIndex = $(colorText).attr('class').split(' ')[0].slice(5)
   toggleLock(colorArrayIndex - 1)
@@ -213,8 +210,8 @@ $('.projects-container').on('click', '.colorbox-mini', function () {
   let colorsArray = Array.from(cardColors).map((color, index) => 
     Object.assign({}, colorPalette[index] , { color: '#' + color.id}))
   colorPalette = colorsArray  
-  console.log(colorsArray)
-  console.log(colorPalette)
+  (colorsArray)
+  (colorPalette)
   updateColorDisplay(colorPalette)
     // colorsArray
 })
@@ -232,7 +229,7 @@ const fetchAllProjects = () => {
             prependProjects(projectsArray);
             updateDropDown(projectsArray);
           })
-          .catch(res => console.log(res))
+          .catch(res => (res))
       });
     });
 };

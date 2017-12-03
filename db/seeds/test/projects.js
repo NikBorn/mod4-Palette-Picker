@@ -48,7 +48,7 @@ exports.seed = function (knex, Promise) {
                 color4: '#A37AF5',
                 color5: '#41347C',
                 project_id: 2,
-                name: 'third palette',
+                name: 'fourth palette',
                 id: 4
               },
               {
@@ -58,7 +58,7 @@ exports.seed = function (knex, Promise) {
                 color4: '#F8EF88',
                 color5: '#7F4B56',
                 project_id: 2,
-                name: 'third palette',
+                name: 'fifth palette',
                 id: 5
               },
               {
@@ -68,7 +68,7 @@ exports.seed = function (knex, Promise) {
                 color4: '#C44761',
                 color5: '#5F645',
                 project_id: 3,
-                name: 'third palette',
+                name: 'sixth palette',
                 id: 6
               }
 
