@@ -28,10 +28,6 @@ const createColorArray = function () {
   }
 }
 
-const updateColorArray = function () {
-
-}
-
 const toggleLockClass = function (color, lock) {
   if (color.isLocked) {
     return lock.addClass('locked')
@@ -42,6 +38,8 @@ const toggleLockClass = function (color, lock) {
 
 const updateColorDisplay = function (newPalette) {
   newPalette.forEach((color, index) => {
+    console.log(index + 1)
+    console.log($(`.color${index + 1}`))
     $(`.color-text-${index + 1}`).text(newPalette[index].color);
     $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
   });
@@ -209,6 +207,17 @@ $('.colorbox').on('click', function () {
   const colorArrayIndex = $(colorText).attr('class').split(' ')[0].slice(5)
   toggleLock(colorArrayIndex - 1)
 });
+
+$('.projects-container').on('click', '.colorbox-mini', function () {
+  let cardColors = $(this).parent().children();
+  let colorsArray = Array.from(cardColors).map((color, index) => 
+    Object.assign({}, colorPalette[index] , { color: '#' + color.id}))
+  colorPalette = colorsArray  
+  console.log(colorsArray)
+  console.log(colorPalette)
+  updateColorDisplay(colorPalette)
+    // colorsArray
+})
 
 const fetchAllProjects = () => {
   return fetch(`/api/v1/projects`)
