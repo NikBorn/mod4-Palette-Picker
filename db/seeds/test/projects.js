@@ -5,9 +5,9 @@ exports.seed = function (knex, Promise) {
     .then(() => {
       return Promise.all([
         knex('projects').insert([
-          { id: 1, title: 'turing' },
-          { id: 2, title: 'personal' },
-          { id: 3, title: 'others' }
+          { id: 1, name: 'turing' },
+          { id: 2, name: 'personal' },
+          { id: 3, name: 'others' }
         ])
           .then(project => {
             return knex('palettes').insert([
@@ -18,7 +18,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#E7DE3C',
                 color5: '#A151C5',
                 project_id: 1,
-                name: 'first palette'
+                name: 'first palette',
+                id: 1
               },
               {
                 color1: '#EB40EB',
@@ -27,7 +28,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#149DFF',
                 color5: '#81C6F',
                 project_id: 1,
-                name: 'second palette'
+                name: 'second palette',
+                id: 2
               },
               {
                 color1: '#83E3FC',
@@ -36,7 +38,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#DB81DE',
                 color5: '#2B3D64',
                 project_id: 1,
-                name: 'third palette'
+                name: 'third palette',
+                id: 3
               },
               {
                 color1: '#F46767',
@@ -45,7 +48,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#A37AF5',
                 color5: '#41347C',
                 project_id: 2,
-                name: 'third palette'
+                name: 'fourth palette',
+                id: 4
               },
               {
                 color1: '#D77ED',
@@ -54,7 +58,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#F8EF88',
                 color5: '#7F4B56',
                 project_id: 2,
-                name: 'third palette'
+                name: 'fifth palette',
+                id: 5
               },
               {
                 color1: '#A73241',
@@ -63,7 +68,8 @@ exports.seed = function (knex, Promise) {
                 color4: '#C44761',
                 color5: '#5F645',
                 project_id: 3,
-                name: 'third palette'
+                name: 'sixth palette',
+                id: 6
               }
 
             ])
