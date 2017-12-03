@@ -6,27 +6,46 @@ const randomColor = () => {
 };
 
 const generateRandomColors = () => {
+  if (colorPalette.length) {
+    const updatedColorPalette = colorPalette.map((color, index) => {
+      if (color.isLocked === false)  {
+        color =  { color: randomColor().toUpperCase(), isLocked: false, paletteIndex: index }
+      }
+      return color;
+    })
+    updateColorDisplay(updatedColorPalette)
+  } else {
+    createColorArray();
+    updateColorDisplay(colorPalette);
+  }
+};
+
+const createColorArray = function () {
   colorPalette = [];
   let count = 0;
   while (count < 5) {
-    colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false });
+    colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false, paletteIndex: count });
     count++;
   }
   if (count === 6) {
     count = 0;
   }
-  updateColorDisplay(colorPalette);
-};
+}
+
+const updateColorArray = function () {
+
+}
+
+const toggleLockClass = function (color, lock) {
+  if (color.isLocked) {
+    return lock.addClass('locked')
+  } else {
+    return lock.removeClass('locked')
+  }
+}
 
 const updateColorDisplay = function (newPalette) {
   newPalette.forEach((color, index) => {
-    const lock = $(`.color${index + 1}`).children('div');
-    if (color.isLocked) {
-      console.log('locked!')
-      lock.addClass('locked')
-    } else {
-      lock.removeClass('locked')
-    }
     $(`.color-text-${index + 1}`).text(newPalette[index].color);
     $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
   });
@@ -71,7 +90,6 @@ const prependProjects = function (projectsArray) {
     );
     let palettes = project.palettes;
     if (palettes.length) {
-      // console.log(palettes)
       palettes.map(palette => {
         htmlPalettes(palette, project.id);
       });
@@ -106,9 +124,7 @@ const addPaletteToDB = (newPalette) => {
   })
     .then(response => response.json())
     .then(() => {
-      // prependNewPalette(newPalette)
       htmlPalettes(newPalette, newPalette.project_id);
-      // console.log(parsedResponse)
     });
 };
 
@@ -123,14 +139,13 @@ const deletePaletteFromDB = (id) => {
 
 const toggleLock = function (index) {
   const colorToToggle = colorPalette[index]
-  // console.log(colorToToggle)
-  // colorPalette[index].attr()
   if (colorToToggle.isLocked) {
     colorToToggle.isLocked = false;
   } else {
     colorToToggle.isLocked = true
   }
-  // console.log(colorPalette)
+  const lock = $(`.color${index + 1}`).children('div');
+  toggleLockClass(colorToToggle , lock)
   updateColorDisplay(colorPalette);
 }
 
@@ -176,10 +191,9 @@ $('.generate-palette-button').on('click', () => {
 });
 
 $('.colorbox').on('click', function () {
+  console.log('toggle-lock')
   const colorText = $(this)[0]
-  console.log(colorText)
   const colorArrayIndex = $(colorText).attr('class').split(' ')[0].slice(5)
-  console.log(colorArrayIndex - 1)
   toggleLock(colorArrayIndex - 1)
 });
 
