@@ -170,6 +170,25 @@ h6 {
   display: inline-block;
 }
 
+.color-lock {
+  height: 20px;
+  width: 20px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-image: url('./assets/unlocked.png');
+  background-color: black;
+}
+
+.locked {
+  background-image: url('./assets/locked.png');
+  background-color: black;
+}
+
+/* .unlocked {
+  
+} */
+
 .palette-name {
   display: inline-block;
 }

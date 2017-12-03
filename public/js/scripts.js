@@ -6,19 +6,45 @@ const randomColor = () => {
 };
 
 const generateRandomColors = () => {
+  if (colorPalette.length) {
+    const updatedColorPalette = colorPalette.map((color, index) => {
+      if (color.isLocked === false)  {
+        color =  { color: randomColor().toUpperCase(), isLocked: false, paletteIndex: index }
+      }
+      return color;
+    })
+    updateColorDisplay(updatedColorPalette)
+  } else {
+    createColorArray();
+    updateColorDisplay(colorPalette);
+  }
+};
+
+const createColorArray = function () {
   colorPalette = [];
   let count = 0;
-  while (count < 6) {
-    colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false });
+  while (count < 5) {
+    colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false, paletteIndex: count });
     count++;
   }
   if (count === 6) {
     count = 0;
   }
-  updateColorDisplay(colorPalette);
-};
+}
 
-const updateColorDisplay = newPalette => {
+const updateColorArray = function () {
+
+}
+
+const toggleLockClass = function (color, lock) {
+  if (color.isLocked) {
+    return lock.addClass('locked')
+  } else {
+    return lock.removeClass('locked')
+  }
+}
+
+const updateColorDisplay = function (newPalette) {
   newPalette.forEach((color, index) => {
     $(`.color-text-${index + 1}`).text(newPalette[index].color);
     $(`.color${index + 1}`).css('backgroundColor', newPalette[index].color);
@@ -64,7 +90,6 @@ const prependProjects = function (projectsArray) {
     );
     let palettes = project.palettes;
     if (palettes.length) {
-      console.log(palettes)
       palettes.map(palette => {
         htmlPalettes(palette, project.id);
       });
@@ -75,10 +100,7 @@ const prependProjects = function (projectsArray) {
 const updateMiniColors = function (palette) {
   const paletteKeys = Object.keys(palette)
   const keys = Object.keys(palette).sort().splice(0, 5)
-  console.log(paletteKeys)
-  console.log(keys)
   keys.forEach(function (color) {
-    console.log(color)
     let colorId = (palette[color].substr(1))
     $(`#${colorId}`).css('backgroundColor', `${palette[color]}`)
   })
@@ -95,7 +117,6 @@ const updateDropDown = function (projectsArray) {
 };
 
 const addPaletteToDB = (newPalette) => {
-  // console.log(newPalette);
   return fetch(`/api/v1/projects/${newPalette.project_id}/palettes`, {
     method: 'post',
     body: JSON.stringify(newPalette),
@@ -103,9 +124,7 @@ const addPaletteToDB = (newPalette) => {
   })
     .then(response => response.json())
     .then(() => {
-      // prependNewPalette(newPalette)
       htmlPalettes(newPalette, newPalette.project_id);
-      // console.log(parsedResponse)
     });
 };
 
@@ -117,6 +136,18 @@ const deletePaletteFromDB = (id) => {
     .then(() => fetchAllProjects())
     .catch(res => console.log(res));
 };
+
+const toggleLock = function (index) {
+  const colorToToggle = colorPalette[index]
+  if (colorToToggle.isLocked) {
+    colorToToggle.isLocked = false;
+  } else {
+    colorToToggle.isLocked = true
+  }
+  const lock = $(`.color${index + 1}`).children('div');
+  toggleLockClass(colorToToggle , lock)
+  updateColorDisplay(colorPalette);
+}
 
 $('.projects-container').on('click', '.delete-palette-button', function () {
   const paletteId = $(this).attr('paletteID');
@@ -157,6 +188,13 @@ $('.save-project-button').on('click', () => {
 
 $('.generate-palette-button').on('click', () => {
   generateRandomColors();
+});
+
+$('.colorbox').on('click', function () {
+  console.log('toggle-lock')
+  const colorText = $(this)[0]
+  const colorArrayIndex = $(colorText).attr('class').split(' ')[0].slice(5)
+  toggleLock(colorArrayIndex - 1)
 });
 
 const fetchAllProjects = () => {
