@@ -229,7 +229,7 @@ const fetchAllProjects = () => {
             prependProjects(projectsArray);
             updateDropDown(projectsArray);
           })
-          .catch(res => (res))
+          .catch(res => console.log(res))
       });
     });
 };
