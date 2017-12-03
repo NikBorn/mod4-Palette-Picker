@@ -239,3 +239,4 @@ const fetchAllProjects = () => {
 
 generateRandomColors();
 fetchAllProjects();
+
