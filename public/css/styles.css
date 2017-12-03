@@ -162,12 +162,16 @@ h6 {
 }
 
 .delete-palette-button {
-  height: 10px;
-  width: 10px;
-  background-image: url('./assets/x-mark-3-32.png');
+  height: 14px;
+  width: 14px;
+  background-image: url('./assets/delete.png');
   background-size: cover;
   background-repeat: no-repeat;
   display: inline-block;
+}
+
+.delete-palette-button:hover {
+  background-image: url('./assets/delete-hover.png')
 }
 
 .color-lock {
@@ -184,10 +188,6 @@ h6 {
   background-image: url('./assets/locked.png');
   background-color: black;
 }
-
-/* .unlocked {
-  
-} */
 
 .palette-name {
   display: inline-block;

@@ -6,29 +6,25 @@ const randomColor = () => {
 };
 
 const generateRandomColors = () => {
-  if (colorPalette.length) {
-    const updatedColorPalette = colorPalette.map((color, index) => {
-      if (color.isLocked === false)  {
-        color =  { color: randomColor().toUpperCase(), isLocked: false, paletteIndex: index }
-      }
-      return color;
-    })
-    updateColorDisplay(updatedColorPalette)
-  } else {
+  if (!colorPalette.length) {
     createColorArray();
-    updateColorDisplay(colorPalette);
-  }
+    // updateColorDisplay(colorPalette);
+  } else {
+    colorPalette = colorPalette.map((color, index) => {
+      if (color.isLocked === false) {
+        color = { color: randomColor().toUpperCase(), isLocked: false, paletteIndex: index }
+      };
+      return color;
+    });
+  };
+  updateColorDisplay(colorPalette);
 };
 
 const createColorArray = function () {
-  colorPalette = [];
   let count = 0;
   while (count < 5) {
     colorPalette.push({ color: randomColor().toUpperCase(), isLocked: false, paletteIndex: count });
     count++;
-  }
-  if (count === 6) {
-    count = 0;
   }
 }
 
@@ -146,8 +142,8 @@ const toggleLock = function (index) {
   }
   const lock = $(`.color${index + 1}`).children('div');
   toggleLockClass(colorToToggle , lock)
-  updateColorDisplay(colorPalette);
-}
+  // updateColorDisplay(colorPalette);
+};
 
 $('.projects-container').on('click', '.delete-palette-button', function () {
   const paletteId = $(this).attr('paletteID');
