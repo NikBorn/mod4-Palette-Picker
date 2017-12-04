@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "eslint": "./node_modules/.bin/eslint ./",
+    "lint": "./node_modules/.bin/eslint ./",
     "test": "NODE_ENV=test mocha --exit",
     "start": "node server.js"
   },
