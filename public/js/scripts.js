@@ -3,7 +3,17 @@ let colorPalette = [];
 /* eslint-disable no-console */
 
 const randomColor = function () {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  let color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  return checkColor(color);
+};
+
+const checkColor = function (color) {
+  if (color.length === 7) {
+    return color;
+  } else {
+    color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    return checkColor(color);
+  }
 };
 
 const generateRandomColors = function () {
