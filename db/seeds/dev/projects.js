@@ -2,7 +2,7 @@
 exports.seed = function (knex, Promise) {
   return knex('palettes').del() //delete all footnotes
     .then(() => knex('projects').del()) //delete all papers
-
+  /* eslint-disable no-console */
     .then(() => {
       return Promise.all([
         knex('projects').insert({
@@ -28,11 +28,12 @@ exports.seed = function (knex, Promise) {
                 project_id: project[0],
                 name: 'second palette'
               }
-            ])
+            ]);
           })
+        
           .then(() => console.log('Seeding Complete!'))
           .catch(error => console.log({ error }))
-      ])
+      ]);
     })
-    .catch(error => console.log({ error }))
+    .catch(error => console.log({ error }));
 };

@@ -1,7 +1,7 @@
 exports.seed = function (knex, Promise) {
   return knex('palettes').del() //delete all footnotes
     .then(() => knex('projects').del()) //delete all papers
-
+  /* eslint-disable no-console */
     .then(() => {
       return Promise.all([
         knex('projects').insert([
@@ -9,7 +9,7 @@ exports.seed = function (knex, Promise) {
           { id: 2, name: 'personal' },
           { id: 3, name: 'others' }
         ])
-          .then(project => {
+          .then(() => {
             return knex('palettes').insert([
               {
                 color1: '#DF0B24',
@@ -72,11 +72,11 @@ exports.seed = function (knex, Promise) {
                 id: 6
               }
 
-            ])
+            ]);
           })
           .then(() => console.log('Test Seeding Complete!'))
           .catch(error => console.log({ error }))
-      ])
+      ]);
     })
-    .catch(error => console.log({ error }))
+    .catch(error => console.log({ error }));
 };
