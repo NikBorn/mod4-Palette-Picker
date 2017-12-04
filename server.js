@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -33,7 +35,7 @@ app.get('/api/v1/palettes', (request, response) => {
       return response.status(200).json(palettes);
     })
     .catch((error) => {
-      return response.status(500).json({ error })
+      return response.status(500).json({ error });
     });
 });
 
@@ -50,11 +52,11 @@ app.post('/api/v1/projects', (request, response) => {
 
   database('projects').insert(project, 'id')
     .then(project => {
-      return response.status(201).json({ id: project[0] })
+      return response.status(201).json({ id: project[0] });
     })
     .catch(error => {
-      return response.status(500).json({ error })
-    })
+      return response.status(500).json({ error });
+    });
 });
 
 app.get('/api/v1/projects/:id/palettes', (request, response) => {
@@ -63,9 +65,9 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
       if (palettes.length) {
         return response.status(200).json(palettes);
       } else {
-        return response.status(404).json({ error: `No saved Palettes for project ${request.params.id}`})
+        return response.status(404).json({ error: `No saved Palettes for project ${request.params.id}`});
       }
-    })
+    });
 });
 
 app.post('/api/v1/projects/:id/palettes', (request, response) => {
@@ -80,15 +82,15 @@ app.post('/api/v1/projects/:id/palettes', (request, response) => {
     }
   }
 
-  palette = Object.assign({}, palette, { project_id: projectId })
+  palette = Object.assign({}, palette, { project_id: projectId });
 
   database('palettes').insert(palette, 'id')
     .then(palette => {
-      return response.status(201).json({ id: palette[0] })
+      return response.status(201).json({ id: palette[0] });
     })
     .catch(error => {
-      return response.status(500).json({ error })
-    })
+      return response.status(500).json({ error });
+    });
 });
 
 app.get('/api/v1/projects/:id', (request, response) => {
@@ -97,9 +99,9 @@ app.get('/api/v1/projects/:id', (request, response) => {
       if (projects.length) {
         return response.status(200).json(projects);
       } else {
-        return response.status(404).json({ error: `could not find project with ID of ${request.params.id}` })
+        return response.status(404).json({ error: `could not find project with ID of ${request.params.id}` });
       }
-    })
+    });
 });
 
 app.get('/api/v1/palettes/:id', (request, response) => {
@@ -108,10 +110,10 @@ app.get('/api/v1/palettes/:id', (request, response) => {
       if (palettes.length) {
         return response.status(200).json(palettes);
       } else {
-        return response.status(404).json({ error: `could not find palette with ID of ${request.params.id}`})
+        return response.status(404).json({ error: `could not find palette with ID of ${request.params.id}`});
       }
-    })
-})
+    });
+});
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
   const { id } = request.params;
@@ -125,7 +127,7 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       database('palettes').where('id', id).del()
         .then(() => {
           return response.sendStatus(204);
-        })    
+        });    
     })
     .catch(error => {
       return response.status(500).json({ error });
@@ -138,7 +140,7 @@ app.patch('/api/v1/projects/:id/palettes/:id', (request, response) => {
 
 app.delete('/api/v1/projects/:id', (request, response) => {
 
-})
+});
 
 
 app.listen(app.get('port'), () => {

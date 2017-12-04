@@ -1,5 +1,6 @@
 let projectsArray = [];
 let colorPalette = [];
+/* eslint-disable no-console */
 
 const randomColor = function () {
   return '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -11,11 +12,13 @@ const generateRandomColors = function () {
   } else {
     colorPalette = colorPalette.map((color, index) => {
       if (color.isLocked === false) {
-        color = { color: randomColor().toUpperCase(), isLocked: false, paletteIndex: index }
-      };
+        color = { 
+          color: randomColor().toUpperCase(), 
+          isLocked: false, paletteIndex: index };
+      }
       return color;
     });
-  };
+  }
   updateColorDisplay(colorPalette);
 };
 
@@ -27,7 +30,7 @@ const createColorArray = function () {
       isLocked: false, 
       paletteIndex: count });
     count++;
-  };
+  }
 };
 
 const fetchAllProjects = function () {
@@ -43,7 +46,7 @@ const fetchAllProjects = function () {
             prependProjects(projectsArray);
             updateDropDown(projectsArray);
           })
-          .catch(res => console.log(res))
+          .catch(res => console.log(res));
       });
     });
 };
@@ -60,7 +63,7 @@ const updateColorDisplay = function (newPalette) {
 };
 
 const htmlMiniSquare = function (paletteColor, index) {
-    const color = paletteColor.substr(1);
+  const color = paletteColor.substr(1);
   return (
     `<div id='${color}' class='colorbox-mini mini-${index}'>
       <h6>${paletteColor}</h6>
@@ -73,7 +76,9 @@ const htmlPalettes = function (palette, projectId) {
   project.append(
     `<div class='palette-card'>
       <h5 class='palette-name'>${palette.name}</h5>
-      <div class='delete-palette-button' projectID='${projectId}' paletteID='${palette.id}'></div>
+      <div class='delete-palette-button' 
+           projectID='${projectId}' 
+           paletteID='${palette.id}'></div>
       <div class='mini-palette'>
         ${htmlMiniSquare(palette.color1, 1)}
         ${htmlMiniSquare(palette.color2, 2)}
@@ -83,9 +88,9 @@ const htmlPalettes = function (palette, projectId) {
       </div>
     </div>`
 
-  )
+  );
   updateMiniColors(palette);
-}
+};
 
 const prependProjects = function (projectsArray) {
   const projectsContainer = $('.projects-container');
@@ -97,7 +102,7 @@ const prependProjects = function (projectsArray) {
       palettes.map(palette => {
         htmlPalettes(palette, project.id);
       });
-    };
+    }
   });
 };
 
@@ -111,11 +116,11 @@ const addProject = function (project) {
 };
 
 const updateMiniColors = function (palette) {
-  const paletteKeys = Object.keys(palette)
-  const keys = Object.keys(palette).sort().splice(0, 5)
+  const paletteKeys = Object.keys(palette);
+  const keys = Object.keys(palette).sort().splice(0, 5);
   keys.forEach(function (color) {
     let colorId = (palette[color].substr(1));
-    $(`#${colorId}`).css('backgroundColor', `${palette[color]}`)
+    $(`#${colorId}`).css('backgroundColor', `${palette[color]}`);
   });
 };
 
@@ -159,7 +164,7 @@ const toggleLock = function (index) {
     colorToToggle.isLocked = true;
   }
   const lock = $(`.color${index + 1}`).children('div');
-  toggleLockClass(colorToToggle , lock);
+  toggleLockClass(colorToToggle, lock);
 };
 
 $('.projects-container').on('click', '.delete-palette-button', function () {
@@ -213,7 +218,7 @@ $('.colorbox').on('click', function () {
 $('.projects-container').on('click', '.colorbox-mini', function () {
   let cardColors = $(this).parent().children();
   let colorsArray = Array.from(cardColors).map((color, index) => 
-    Object.assign({}, colorPalette[index] , { color: '#' + color.id}));
+    Object.assign({}, colorPalette[index], { color: '#' + color.id}));
   colorPalette = colorsArray;  
   updateColorDisplay(colorPalette);
 });
