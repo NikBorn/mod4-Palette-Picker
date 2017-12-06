@@ -1,0 +1,29 @@
+{
+  "short_name": "hotMark",
+  "name": "Your Favorite MarkDown Previewer",
+  "background_color": "#dcaffd",
+  "theme_color": "#74c7fd",
+  "display": "fullscreen",
+  "icons": [{
+      "src": "./css/assests/icon-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "./css/assests/icon-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "./css/assests/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./css/assests/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html?launcher=true"
+}
