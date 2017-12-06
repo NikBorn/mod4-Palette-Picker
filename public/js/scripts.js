@@ -236,3 +236,14 @@ $('.projects-container').on('click', '.colorbox-mini', function () {
 generateRandomColors();
 fetchAllProjects();
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => {
+        console.log('serviceWorker registartion successful');
+      })
+      .catch(error => {
+        console.log(`ServiceWorker registration failed: ${error}`);
+      });
+  });//end eventListener
+}
