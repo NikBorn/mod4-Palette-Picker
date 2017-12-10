@@ -1,6 +1,20 @@
 let projectsArray = [];
 let colorPalette = [];
-/* eslint-disable no-console */
+/* eslint-disable no-console no-undef */
+
+let db = new Dexie('palettePicker');
+
+db.version(1).stores({
+  projects: 'id, name',
+  palettes:
+    'id, color1, color2, color3, color4, color5, name, project_Id',
+});
+
+
+
+
+
+
 
 const randomColor = function () {
   let color = '#' + Math.floor(Math.random() * 16777215).toString(16);
