@@ -229,7 +229,7 @@ const addProject = function (project) {
   const projectsContainer = $('.projects-container');
   projectsContainer.append(
     `<div class='project-container${project.id}' >
-      <h4>${project.name.toUpperCase()}</h4>
+      <h4 class='project-name'>${project.name.toUpperCase()}</h4>
       </div>`
   );
 };
@@ -253,6 +253,8 @@ const updateDropDown = function (projectsArray) {
   });
 };
 
+// const add
+
 const addPaletteToDB = function (newPalette) {
   return fetch(`/api/v1/projects/${newPalette.project_id}/palettes`, {
     method: 'post',
@@ -265,8 +267,6 @@ const addPaletteToDB = function (newPalette) {
       generateOfflinePalettes(newPalette);
     });
 };
-
-
 
 const deletePaletteFromDB = function (id) {
   fetch(`./api/v1/palettes/${id}`, {
