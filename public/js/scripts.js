@@ -1,6 +1,114 @@
 let projectsArray = [];
 let colorPalette = [];
-/* eslint-disable no-console */
+/*eslint-disable*/
+
+
+let db = new Dexie('palettePicker');
+
+db.version(1).stores({
+  projects: 'id, name',
+  palettes:
+    'id, color1, color2, color3, color4, color5, name, project_Id',
+});
+
+
+
+
+const postOfflineProjects = function (projects) {
+  return db.projects.add({ id: Date.now(), projects });
+};
+
+const postOfflinePalettes = function (palettes) {
+  return db.palettes.add({ id: Date.now(), palettes });
+};
+
+const fetchOfflineProjects = function () {
+  return db.projects.toArray();
+};
+
+const fetchOfflinePalettes = function () {
+  return db.palettes.toArray();
+};
+
+navigator.serviceWorker.addEventListener('message', event => {
+  if (event.data.type === 'project') {
+    setPendingProjectsToSynced()
+      .then(result => {
+        console.log('send setPendingProjectsToSynced log', result);
+      })
+      .catch(error => console.error(error));
+  } else if (event.data.type === 'palette') {
+    setPendingPalettesToSynced()
+      .then(() => {
+      })
+      .catch(error => console.error(error));
+  }
+});
+
+const setPendingProjectsToSynced = function () {
+  return db.projects.where('status')
+    .equals('pendingSync')
+    .modify({ status: 'synced' });
+};
+
+const setPendingPalettesToSynced = function () {
+  return db.palettes.where('status')
+    .equals('pendingSync')
+    .modify({ status: 'synced' });
+};
+
+const sendProjectToSync = function (project) {
+  navigator.serviceWorker.controller.postMessage({
+    type: 'projects',
+    project
+  });
+};
+
+const sendPaletteToSync = function (palette) {
+  navigator.serviceWorker.controller.postMessage({
+    type: 'palettes',
+    palette
+  });
+};
+
+const retreiveOfflineProjects = function () {
+  fetchOfflineProjects()
+    .then(projects => {
+      updateDropDown(projects)
+      prependProjects(projects)})
+    .catch(error => {
+      throw error;
+    });
+};
+
+const retreiveOfflinePalettes = function (projectId) {
+  fetchOfflinePalettes()
+    .then(palettes => {
+      palettes.forEach(palette => {
+        htmlPalettes(palette, projectId)
+      })
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+const generateOfflineProjects = function (name) {
+  postOfflineProjects({ id: Date.now(), name })
+    .then(() => {
+      updateDropDown([{name}])
+      console.log('IndexedDC store - success!')})
+    .catch(error => console.error('Error storing locally: ', error));
+};
+
+const generateOfflinePalettes = function (body) {
+  postOfflinePalettes({ id: Date.now(), body })
+    .then(() => console.log('success storing palettes'))
+    .catch(error => console.error('Error storing palettes locally: ', error));
+};
+
+
+
 
 const randomColor = function () {
   let color = '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -56,9 +164,10 @@ const fetchAllProjects = function () {
             prependProjects(projectsArray);
             updateDropDown(projectsArray);
           })
-          .catch(res => console.log(res));
+          .catch(() => retreiveOfflinePalettes(projectId));
       });
-    });
+    })
+    .catch(() => retreiveOfflineProjects())
 };
 
 const toggleLockClass = function (color, lock) {
@@ -153,6 +262,7 @@ const addPaletteToDB = function (newPalette) {
     .then(response => response.json())
     .then(() => {
       htmlPalettes(newPalette, newPalette.project_id);
+      generateOfflinePalettes(newPalette);
     });
 };
 
@@ -212,6 +322,7 @@ $('.save-project-button').on('click', () => {
     .then(res => {
       const project = Object.assign({ name }, res);
       addProject(project);
+      generateOfflineProjects(name);
     });
 });
 
