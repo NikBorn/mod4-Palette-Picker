@@ -72,7 +72,7 @@ h4 {
   background-color: #23242b;
   display: inline-block;
   padding: 2px 4px;
-  margin: 0;
+  margin: 20px 0 0 0;
   height: 20px;
 }
 
@@ -186,4 +186,5 @@ h6 {
 
 .palette-name {
   display: inline-block;
+  margin: 10px 0 2px 0;
 }
