@@ -37,17 +37,21 @@ button {
   font-weight: bold;
   font-family: 'Quicksand', sans-serif;
   border-radius: 0;
+  cursor: pointer;
+  
 }
 
 button:hover {
   background-color: #89FC3E;
   color: black;
+  cursor: pointer;
 }
 
 select,
 option {
   height: 30px;
   border-radius: 0px;
+  cursor: pointer;  
 }
 
 input {
