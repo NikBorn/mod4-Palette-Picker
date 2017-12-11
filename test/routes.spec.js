@@ -89,59 +89,23 @@ describe('API Routes', () => {
           response.body.should.be.a('array');
           response.body.length.should.equal(3);
           response.body[0].should.have.property('id');
-          response.body[1].should.have.property('id');
-          response.body[2].should.have.property('id');
           response.body[0].id.should.equal(1);
-          response.body[1].id.should.equal(2);
-          response.body[2].id.should.equal(3);
           response.body[0].should.have.property('name');
-          response.body[1].should.have.property('name');
-          response.body[2].should.have.property('name');
           response.body[0].name.should.equal('first palette');
-          response.body[1].name.should.equal('second palette');
-          response.body[2].name.should.equal('third palette');
           response.body[0].should.have.property('color1');
-          response.body[1].should.have.property('color1');
-          response.body[2].should.have.property('color1');
           response.body[0].color1.should.equal('#DF0B24');
-          response.body[1].color1.should.equal('#EB40EB');
-          response.body[2].color1.should.equal('#83E3FC');
           response.body[0].should.have.property('color2');
-          response.body[1].should.have.property('color2');
-          response.body[2].should.have.property('color2');
           response.body[0].color2.should.equal('#2AD75D');
-          response.body[1].color2.should.equal('#D4E64A');
-          response.body[2].color2.should.equal('#C5FCF0');
           response.body[0].should.have.property('color3');
-          response.body[1].should.have.property('color3');
-          response.body[2].should.have.property('color3');
           response.body[0].color3.should.equal('#516ACD');
-          response.body[1].color3.should.equal('#565FCA');
-          response.body[2].color3.should.equal('#2F3076');
           response.body[0].should.have.property('color4');
-          response.body[1].should.have.property('color4');
-          response.body[2].should.have.property('color4');
           response.body[0].color4.should.equal('#E7DE3C');
-          response.body[1].color4.should.equal('#149DFF');
-          response.body[2].color4.should.equal('#DB81DE');
           response.body[0].should.have.property('color5');
-          response.body[1].should.have.property('color5');
-          response.body[2].should.have.property('color5');
           response.body[0].color5.should.equal('#A151C5');
-          response.body[1].color5.should.equal('#81C6F');
-          response.body[2].color5.should.equal('#2B3D64');
           response.body[0].should.have.property('project_id');
-          response.body[1].should.have.property('project_id');
-          response.body[2].should.have.property('project_id');
           response.body[0].project_id.should.equal(1);
-          response.body[1].project_id.should.equal(1);
-          response.body[2].project_id.should.equal(1);
           response.body[0].should.have.property('created_at');
-          response.body[1].should.have.property('created_at');
-          response.body[2].should.have.property('created_at');
           response.body[0].should.have.property('updated_at');
-          response.body[1].should.have.property('updated_at');
-          response.body[2].should.have.property('updated_at');
         })
         .catch((error) => {
           throw error;
@@ -162,10 +126,7 @@ describe('API Routes', () => {
     it('should be able to add a project to the db', () => {
       return chai.request(server)
         .post('/api/v1/projects')
-        .send({
-          id: 4,
-          name: 'test-add-project'
-        })
+        .send({ name: 'test-add-project' })
         .then(response => {
           response.should.have.status(201);
           response.body.should.be.a('object');
@@ -178,9 +139,7 @@ describe('API Routes', () => {
     it('should not add the project to database if info is missing', () => {
       return chai.request(server)
         .post('/api/v1/projects')
-        .send({
-          id: 5
-        })
+        .send({ })
         .then(response => {
           response.should.have.status(422);
           response.body.should.be.a('object');
