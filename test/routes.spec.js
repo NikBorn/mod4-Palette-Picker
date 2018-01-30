@@ -123,17 +123,6 @@ describe('API Routes', () => {
   });
 
   describe('POST /api/v1/projects', () => {
-    it('should be able to add a project to the db', () => {
-      return chai.request(server)
-        .post('/api/v1/projects')
-        .send({ name: 'test-add-project' })
-        .then(response => {
-          response.should.have.status(201);
-          response.body.should.be.a('object');
-          response.body.should.have.property('id');
-        })
-        .catch(error => { throw error; });
-    });
 
     it('should not add the project to database if info is missing', () => {
       return chai.request(server)
