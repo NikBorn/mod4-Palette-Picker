@@ -13,16 +13,16 @@ header {
 }
 
 main {
-  background-color: #23242b;
+  /* background-color: #23242b; */
   display: inline-block;
-  width: 75%;
+  width: 100%;
   min-height: 100vh;
 }
 
 aside {
   background-color: #151518;
   color: white;
-  float: right;
+  /* float: right; */
   width: 25%;
   height: 100vh;
   padding-top: 40px;
@@ -31,31 +31,41 @@ aside {
 
 button {
   color: white;
-  background-color: #3b3c44;
+  background-color: #000000;
   border: none;
-  padding: 8px 6px;
+  padding: 20px;
   font-weight: bold;
+  font-size: 20px;
   font-family: 'Quicksand', sans-serif;
   border-radius: 0;
   cursor: pointer;
-  
+  width: 282px;
 }
 
 button:hover {
-  background-color: #89FC3E;
-  color: black;
+  background-color: grey;
+  /* color: black; */
   cursor: pointer;
 }
 
 select,
 option {
-  height: 30px;
+  height: 60px;
   border-radius: 0px;
   cursor: pointer;  
+  font-size: 20px;
+  display: block;
+  margin: 0 auto;
+  min-width: 180px;
+}
+
+select {
+  margin: 5px auto 20px auto;
 }
 
 input {
   padding: 6px 0;
+  font-size: 20px;
 }
 
 h1 {
@@ -84,17 +94,18 @@ h6 {
 }
 
 .main-palette {
-  display: flex;
-  width: 304px;
-  border: 2px solid #23242b;
+  display: inline-flex;
+  /* width: 304px; */
+  /* border: 2px solid #23242b; */
   flex-wrap: wrap;
-  margin: 40px auto 10px auto;
-  position: relative;
+  margin: 0 0 40px 0;
+  justify-content: center;
+  width: 100%;
 }
 
 .colorbox {
-  width: 150px;
-  height: 150px;
+  width: 20%;
+  height: 180px;
   display: inline-flex;
   justify-content: center;
 }
@@ -131,20 +142,38 @@ h6 {
 }
 
 .color5 {
-  position: absolute;
-  left: 75px;
-  top: 75px;
-  padding-top: 64px;
+  /* left: 75px; */
 }
+
+.color1 {
+}
+
+.color2 {
+
+
+}
+
+.color3 {
+
+
+}
+
+.color4 {
+
+}
+
+.color5 {
+
+}
+
+
 
 .color1,
 .color2 {
-  padding-top: 6px;
 }
 
 .color3,
 .color4 {
-  padding-top: 124px;
 }
 
 .generate-palette-button {
