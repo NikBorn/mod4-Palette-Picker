@@ -1,4 +1,4 @@
-Palette-Picker Readme
+Palette-Picker
 
 INTRO
 
