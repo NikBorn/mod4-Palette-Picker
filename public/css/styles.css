@@ -7,39 +7,113 @@
 }
 
 header {
-  background-color: #151518;
+  background-color: black;
   color: white;
   font-family: 'Muli', sans-serif;
+  padding: 4px 0;
+  height: 45px;
 }
 
 main {
   /* background-color: #23242b; */
-  display: inline-block;
-  width: 100%;
-  min-height: 100vh;
+  display: block;
+  /* width: 100vw; */
+  max-height: 100vh;
+  background-color: black;
+  position: relative;
 }
 
-aside {
+@keyframes saveToggle {
+    from {top: 200px}
+    to {top: 1000px}
+}
+
+@keyframes saveToggle2 {
+    from {top: 800px}
+    to {top: 200px}
+}
+
+.save-form {
+  width: 100vw;
+  height: 440vh;
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  top: 200px;
+  animation-name: saveToggle2;
+  animation-duration: .75s;
+}
+
+.save-form-hidden {
+  top: 1000px;
+  animation-name: saveToggle;
+  animation-duration: .75s;
+  display: none;
+}
+
+.projects-container-sec {
+  width: 100vw;
+  height: 466px;
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  top: 200px;
+  animation-name: saveToggle2;
+  animation-duration: .75s;
+  overflow: scroll;
+  padding-bottom: 20px;
+}
+
+.projects-container-sec-hidden {
+  top: 1000px;
+  animation-name: saveToggle;
+  animation-duration: .75s;
+  display: none;
+}
+
+/* aside {
   background-color: #151518;
   color: white;
-  /* float: right; */
+  float: right;
   width: 25%;
   height: 100vh;
   padding-top: 40px;
   overflow: scroll;
-}
+} */
 
 button {
   color: white;
   background-color: #000000;
   border: none;
-  padding: 20px;
+  /* padding: 10px; */
   font-weight: bold;
   font-size: 20px;
   font-family: 'Quicksand', sans-serif;
   border-radius: 0;
   cursor: pointer;
-  width: 282px;
+  width: 216px;
+  display: inline-block;
+  justify-content: space-around;
+  padding: 18px;
+}
+
+.projects-button,
+.save-button {
+  width: 144px;
+  font-size: 16px;
+  /* background-color: red; */
+}
+
+.save-button {
+  border-right: 1px solid white;
+}
+
+.projects-button {
+  border-left: 1px solid white;
+}
+
+.tab-bar {
+  display: flex;
 }
 
 button:hover {
@@ -50,13 +124,15 @@ button:hover {
 
 select,
 option {
-  height: 60px;
+  height: 37px;
   border-radius: 0px;
   cursor: pointer;  
-  font-size: 20px;
+  font-size: 16px;
   display: block;
-  margin: 0 auto;
-  min-width: 180px;
+  width: 200px;
+  text-align: center;
+  padding: 0 0 0 10px;
+
 }
 
 select {
@@ -66,6 +142,13 @@ select {
 input {
   padding: 6px 0;
   font-size: 20px;
+  border: 1px solid grey;
+  margin: 20px 0;
+  width: 200px;
+}
+
+.palette-name-input {
+  margin-left: 40px;
 }
 
 h1 {
@@ -73,7 +156,7 @@ h1 {
 }
 
 aside h2 {
-  margin-bottom: 20px;
+  margin: 20px 0 20px 40px;
   font-family: 'Muli', sans-serif;
 }
 
@@ -97,24 +180,69 @@ h6 {
   display: inline-flex;
   /* width: 304px; */
   /* border: 2px solid #23242b; */
-  flex-wrap: wrap;
-  margin: 0 0 40px 0;
-  justify-content: center;
+  /* flex-wrap: w */
+  justify-content: space-around;
+  min-width: 100vw;
+  /* margin-bottom: 10px; */
+}
+
+@keyframes example2 {
+    from {height: 100px}
+    to {height: 75px}
+}
+
+.lock-box-area {
+  height: 75px;
   width: 100%;
+  background-color: #00000092;
+  border-radius: 0 0 40% 40%;
+  animation-name: example2;
+  animation-duration: .75s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes example {
+    from {height: 75px}
+    to {height: 100px}
+}
+
+.expanded {
+  height: 100px;
+  animation-name: example;
+  animation-duration: .75s;
 }
 
 .colorbox {
   width: 20%;
-  height: 180px;
+  height: 523px;
   display: inline-flex;
   justify-content: center;
+  transform: rotate(180deg);
+}
+
+.color-text {
+  width: 20%;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 10px 0;
+}
+
+.color-text-area {
+  width: 100%;
+  display: flex;
+  /* padding: 10px 0; */
+  background-color: black;
 }
 
 .mini-palette {
   display: flex;
-  width: 154px;
+  width: 90%;
   border: 2px solid black;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
   position: relative;
   margin: 4px auto 0 auto;
 }
@@ -124,7 +252,7 @@ h6 {
   height: 75px;
 }
 
-.mini-5 {
+/* .mini-5 {
   position: absolute;
   left: 35px;
   top: 40px;
@@ -139,7 +267,7 @@ h6 {
 .mini-3,
 .mini-4 {
   padding-top: 56px;
-}
+} */
 
 .color5 {
   /* left: 75px; */
@@ -176,10 +304,10 @@ h6 {
 .color4 {
 }
 
-.generate-palette-button {
+/* .generate-palette-button {
   display: block;
   margin: 0 auto 20px auto;
-}
+} */
 
 .project-container {
   margin-top: 10px;
@@ -198,19 +326,40 @@ h6 {
   background-image: url('./assets/delete-hover.png')
 }
 
+@keyframes bumpback {
+    from {margin-top: 45px}
+    to {margin-top: 20px}
+}
+
 .color-lock {
-  height: 20px;
-  width: 20px;
+  margin-top: 20px;
+  height: 40px;
+  width: 40px;
   background-size: cover;
   background-repeat: no-repeat;
   display: inline-block;
   background-image: url('./assets/unlocked.png');
-  background-color: black;
+  transform: rotate(180deg);
+  animation-name: bumpback;
+  animation-duration: .75s;
+}
+
+@keyframes bump {
+    from {margin-top: 20px}
+    to {margin-top: 45px}
 }
 
 .locked {
+  margin-top: 45px;
+  height: 40px;
+  width: 40px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
   background-image: url('./assets/locked.png');
-  background-color: black;
+  transform: rotate(180deg);
+  animation-name: bump;
+    animation-duration: .75s;
 }
 
 .palette-name {
@@ -220,4 +369,13 @@ h6 {
 
 .project-name {
     margin: 20px 0 6px 0;
+}
+
+.project-name-input {
+  margin-top: 4px;
+}
+
+.close-button {
+  float: right;
+  margin: 10px;
 }

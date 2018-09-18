@@ -185,7 +185,7 @@ const htmlMiniSquare = function (paletteColor, index) {
   const color = paletteColor.substr(1);
   return (
     `<div id='${color}' class='colorbox-mini mini-${index}'>
-      <h6>${paletteColor}</h6>
+    
     </div>`
   );
 };
@@ -256,6 +256,7 @@ const updateDropDown = function (projectsArray) {
 // const add
 
 const addPaletteToDB = function (newPalette) {
+  console.log(newPalette)
   return fetch(`/api/v1/projects/${newPalette.project_id}/palettes`, {
     method: 'post',
     body: JSON.stringify(newPalette),
@@ -278,12 +279,13 @@ const deletePaletteFromDB = function (id) {
 
 const toggleLock = function (index) {
   const colorToToggle = colorPalette[index];
+  const lock = $(`.color${index + 1}-lock-box-area`).children('.color-lock');
   if (colorToToggle.isLocked) {
     colorToToggle.isLocked = false;
   } else {
     colorToToggle.isLocked = true;
   }
-  const lock = $(`.color${index + 1}`).children('div');
+  lock.parent().toggleClass('expanded')
   toggleLockClass(colorToToggle, lock);
 };
 
@@ -293,7 +295,20 @@ $('.projects-container').on('click', '.delete-palette-button', function () {
   deletePaletteFromDB(paletteId);
 });
 
+$('.projects-button').on('click', function () {
+  let hidden = $('main').children('.projects-container-sec-hidden');
+  // console.log(hidden)
+  hidden.toggleClass('projects-container-sec-hidden');
+})
+
+$('.save-button').on('click', function () {
+  let hidden = $('main').children('.save-form-hidden')
+  console.log(hidden)
+  hidden.toggleClass('save-form-hidden')
+})
+
 $('.save-palette-button').on('click', () => {
+  console.log('trying to save')
   const newPalette = Object.assign({
     name: $('.palette-name-input').val(),
     color1: $('.color-text-1').text(),
@@ -303,6 +318,9 @@ $('.save-palette-button').on('click', () => {
     color5: $('.color-text-5').text(),
     project_id: $('.projects-dropdown').val()
   });
+  let saveForm = $('.save-form');
+  console.log(saveForm)
+  saveForm.toggleClass('save-form-hidden')
   addPaletteToDB(newPalette);
 });
 
@@ -344,6 +362,22 @@ $('.projects-container').on('click', '.colorbox-mini', function () {
   updateColorDisplay(colorPalette);
 });
 
+
+$('.close-projects').on('click', function () {
+  let projectsContainer = $(this).parent();
+  projectsContainer.toggleClass('projects-container-sec-hidden')
+})
+
+$('.close-save').on('click', function () {
+  let saveForm = $(this).parent();
+  saveForm.toggleClass('save-form-hidden')
+})
+
+
+
+
+
+
 generateRandomColors();
 fetchAllProjects();
 
@@ -358,3 +392,4 @@ if ('serviceWorker' in navigator) {
       });
   });//end eventListener
 }
+

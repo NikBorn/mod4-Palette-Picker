@@ -1,74 +1,102 @@
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#317EFB" />
-  <title>PALETTE PICKER</title>
-  <link rel="normalize" type="text/css" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Anton|Quicksand:400,700" rel="stylesheet">
-  <link rel='manifest' href='/manifest.json'>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#317EFB" />
+    <title>PALETTE PICKER</title>
+    <link rel="normalize" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Quicksand:400,700" rel="stylesheet">
+    <link rel='manifest' href='/manifest.json'>
+  </head>
+  <body>
+    <main>
 
-<body>
-  <main>
-    <header>
-      <h1>PALETTE PICKER</h1>
-    </header>
-    <article class='main-palette'>
-      <div class='color1 colorbox'>
-        <!-- <h4 class='color-value-top color-text-1'>#25B0E4</h4> -->
-        <!-- <div class='color-lock'></div> -->
+      <div class='save-form save-form-hidden'>
+        <div class='close-save close-button'>X</div>
+        <input class='palette-name-input' type='text' placeholder='new palette name'>
+        <p>Save to existing project</p>
+        <select class='projects-dropdown' name="projects">
+        </select>
+        <!-- <button class='save-palette-button'>SAVE</button> -->
+        <p>or create a new one</p>
+
+        <input class='project-name-input' type='text' placeholder='new project name'>
+        <button class='save-palette-button'>SAVE</button>
       </div>
-      <div class='color2 colorbox'>
-        <!-- <h4 class='color-value-top color-text-2'>#E5AF20</h4> -->
-        <!-- <div class='color-lock'></div> -->
-      </div>
-      <div class='color3 colorbox'>
-        <!-- <h4 class='color-value-bottom color-text-3'>#3F4EED</h4> -->
-        <!-- <div class='color-lock'></div> -->
-      </div>
-      <div class='color4 colorbox'>
-        <!-- <h4 class='color-value-bottom color-text-4'>#E1362E</h4> -->
-        <!-- <div class='color-lock'></div> -->
-      </div>
-      <div class='color5 colorbox'>
-        <!-- <h4 class='color-value-center color-text-5'>#2441A1</h4> -->
-        <!-- <div class='color-lock'></div> -->
-      </div>
-    </article>
-    <button class='generate-palette-button'>GENERATE NEW PALETTE</button>
-    <input class='palette-name-input'type='text' placeholder='new palette name'>
-    <p>Save to existing project</p>
-    <select class='projects-dropdown' name="projects">
-    </select>
-    <button class='save-palette-button'>SAVE</button>
-  </main>
-
-  <!-- <aside>
-    <h2>
-      projects
-    </h2>
-    <input class='project-name-input' type='text' placeholder='new project name'>
-    <button class='save-project-button'>SAVE</button>
-
-    <div class='projects-container'>
 
 
 
-    </div>
+      <header>
+        <h1>PALETTE PICKER</h1>
+      </header>
+      <article class='color-text-area'>
+        <div class='color-text color-text-1'></div>
+        <div class='color-text color-text-2'></div>
+        <div class='color-text color-text-3'></div>
+        <div class='color-text color-text-4'></div>
+        <div class='color-text color-text-5'></div>
+      </article>
+      <article class='main-palette'>
+        <div class='color1 colorbox'>
+          <div class='lock-box-area color1-lock-box-area'>
+              <div class='color-lock'></div>
+          </div>
+        </div>
+        <div class='color2 colorbox'>
+          <div class='lock-box-area color2-lock-box-area'>
+              <div class='color-lock'></div>
+          </div>
+        </div>
+        
+        <div class='color3 colorbox'>
+          <div class='lock-box-area color3-lock-box-area'>
+            <div class='color-lock'></div>
+          </div>
+        </div>
+        <div class='color4 colorbox'>
+          <div class='lock-box-area color4-lock-box-area'>
+            <div class='color-lock'></div>
+          </div>
+        </div>
+        <div class='color5 colorbox'>
+          <div class='lock-box-area color5-lock-box-area'>
+            <div class='color-lock'></div>
+          </div>
+        </div>
+      </article>
+      <article class='tab-bar'>
+        <button class='save-button'>Save</button>
+        <button class='generate-palette-button'>GENERATE</button>
+        <button class='projects-button'>Review</button>
+      </article>
+      <!-- <input class='palette-name-input'type='text' placeholder='new palette name'>
+      <p>Save to existing project</p>
+      <select class='projects-dropdown' name="projects">
+      </select>
+      <button class='save-palette-button'>SAVE</button> -->
+      <aside class='projects-container-sec projects-container-sec-hidden'>
+        <div class='close-projects close-button'>X</div>
+        <h2>
+          PROJECTS
+        </h2>
+        <div class='projects-container'></div>
+        
+  
+      </aside>
+    </main>
 
-  </aside> -->
-    <script
-      src="https://unpkg.com/dexie@latest/dist/dexie.js">
-    </script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
-    </script>
-    <script
-      type="text/javascript" src="js/scripts.js">
-    </script>
-</body>
+
+      <script
+        src="https://unpkg.com/dexie@latest/dist/dexie.js">
+      </script>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
+      </script>
+      <script
+        type="text/javascript" src="js/scripts.js">
+      </script>
+  </body>
 
 </html>
